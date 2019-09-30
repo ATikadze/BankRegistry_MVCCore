@@ -12,6 +12,10 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace BankRegistry_MVCCore
 {
+    using Microsoft.EntityFrameworkCore;
+    using Repository;
+    using Domain;
+    using Service;
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -31,8 +35,15 @@ namespace BankRegistry_MVCCore
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            //Connecting to SQL
+            string connectionString = @"Server=ALIKUNHUAWEI\SQLEXPRESS;Database=BankRegistry_Core;Trusted_Connection=True;";
+            services.AddDbContext<BankRegistryDbContext>(d => d.UseSqlServer(connectionString));
+
+            services.AddTransient<Domain.ServiceInterfaces.IBankService, BankService>();
+            services.AddTransient<Domain.ServiceInterfaces.IContactPersonService, ContactPersonService>();
+            services.AddTransient<Domain.ServiceInterfaces.IPositionService, PositionService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

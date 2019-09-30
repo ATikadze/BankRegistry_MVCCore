@@ -1,0 +1,30 @@
+﻿@using BankRegistry_MVCCore.Models;
+@model BankSaveModel
+@{
+    ViewData["Title"] = "New";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("New", "Bank", FormMethod.Post, new { @class = "customForm" }))
+{
+    <div class="txtBoxContainer">
+        <p class="text-primary">Bank</p>
+        @Html.HiddenFor(h => h.BankModel.ID)
+        @Html.TextBoxFor(t => t.BankModel.Name, null, new { @class = "form-control", placeHolder = "Name", required = "" })
+        @Html.TextBoxFor(t => t.BankModel.URL, null, new { @class = "form-control", placeHolder = "Image URL" })
+        <p class="text-primary">General Director</p>
+        @Html.TextBoxFor(t => t.ContactPersonModel.FirstName, null, new { @class = "form-control", placeHolder = "Firstname", required = "" })
+        @Html.TextBoxFor(t => t.ContactPersonModel.LastName, null, new { @class = "form-control", placeHolder = "Lastname", required = "" })
+        @Html.TextBoxFor(t => t.ContactPersonModel.DateOfBirth, null, new { @class = "form-control", type = "date", required = "" })
+        @if (Model.BankModel == null)
+        {
+            <button type="submit" class="btn btn-success">Save</button>
+        }
+        else
+        {
+            <input type="hidden" name="edit" value="true" />
+            <button type="submit" class="btn btn-info">Edit</button>
+            @Html.ActionLink("Edit Contact Persons", "NewContactPerson", "Bank", new { bankId = Model.BankModel.ID }, new { @class="btn btn-warning" })
+        }
+    </div>
+}

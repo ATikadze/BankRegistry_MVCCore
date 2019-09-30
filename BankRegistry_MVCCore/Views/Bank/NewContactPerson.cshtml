@@ -1,0 +1,42 @@
+﻿@using BankRegistry_MVCCore.Models
+@model BankSaveModel
+
+@{
+    ViewData["Title"] = "NewContactPerson";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Firstname</th>
+        <th scope="col">Lastname</th>
+        <th scope="col">Date of birth</th>
+        <th scope="col">Position</th>
+      </tr>
+    </thead>
+    <tbody>
+        @foreach (var bSM in Model.ContactPersonModels)
+        {
+            <tr class="onHoverBtn">
+                <td>@bSM.FirstName</td>
+                <td>@bSM.LastName</td>
+                <td>@bSM.DateOfBirth.ToShortDateString()</td>
+                <td>@Model.Positions.Single(s => s.ID == bSM.PositionID).Name</td>
+                <td>@Html.ActionLink("Remove", "NewContactPerson", "Bank", new { bankID = Model.BankModel.ID, contactPersonID = bSM.ID }, new { @class = "btn btn-outline-danger" })</td>
+            </tr>
+        }
+        @using (Html.BeginForm("NewContactPerson", "Bank", FormMethod.Post))
+        {
+            <tr class="onHoverBtn">
+                <td>@Html.TextBoxFor(t => t.ContactPersonModel.FirstName, null, new { @class = "form-control", placeHolder = "Firstname", required = "" })</td>
+                <td>@Html.TextBoxFor(t => t.ContactPersonModel.LastName, null, new { @class = "form-control", placeHolder = "Lastname", required = "" })</td>
+                <td>@Html.TextBoxFor(t => t. ContactPersonModel.DateOfBirth, null, new { @class = "form-control", type = "date", required = "" })</td>
+                <td>@Html.DropDownListFor(d => d.ContactPersonModel.PositionID, Model.Positions.Where(w => w.Name != "General Director").Select(s => new SelectListItem() { Text = s.Name, Value = s.ID.ToString() }).OrderBy(o => o.Text), null, new { @class = "custom-select" })</td>
+                <td><button type="submit" class="btn btn-outline-success">Add</button></td>
+            </tr>
+            @Html.HiddenFor(h => h.BankModel.ID)
+        }
+        <tr class="onHoverBtn"><td style="text-align: right" colspan="5">@Html.ActionLink("Finish", "Index", "Home", null, new { @class = "btn btn-outline-secondary" })</td></tr>
+    </tbody>
+</table> 
