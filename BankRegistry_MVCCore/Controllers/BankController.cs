@@ -73,7 +73,7 @@ namespace BankRegistry_MVCCore.Controllers
             {
                 ID = bankSaveModel.BankModel.ID,
                 Name = bankSaveModel.BankModel.Name.Trim(),
-                URL = bankSaveModel.BankModel.URL.Trim()
+                URL = bankSaveModel.BankModel.URL?.Trim()
             };
             _bankService.Save(bank);
             _bankService.Commit();

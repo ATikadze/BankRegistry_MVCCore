@@ -17,7 +17,7 @@
         @foreach (var bM in Model.Select((v, i) => new { v, i }))
         {
         <tr class="onHoverBtn">
-            <td class="bankContainer" onclick="window.location.href='@Url.Action("New", "Bank", new { bankId = bM.v.ID })'">@bM.i</td>
+            <td class="bankContainer" onclick="window.location.href='@Url.Action("New", "Bank", new { bankId = bM.v.ID })'">@(bM.i + 1)</td>
             <td class="bankContainer" onclick="window.location.href='@Url.Action("New", "Bank", new { bankId = bM.v.ID })'"><img src="@bM.v.URL" width="50" height="50" /></td>
             <td class="bankContainer" onclick="window.location.href='@Url.Action("New", "Bank", new { bankId = bM.v.ID })'">@bM.v.Name</td>
             <td style="text-align: right">@Html.ActionLink("Remove", "Index", "Home", new { text = (string)null,  id = bM.v.ID, remove = true }, new { @class = "btn btn-outline-danger" })</td>
