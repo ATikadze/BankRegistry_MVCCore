@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Repository
 {
-    using Domain;
     using Microsoft.EntityFrameworkCore;
+    using Domain;
 
     public class BankRegistryDbContext : DbContext
     {

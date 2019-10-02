@@ -8,13 +8,14 @@ namespace Service
 {
     using Domain.ServiceInterfaces;
     using Repository;
+    using Domain.RepositoryInterfaces;
     public abstract class ServiceBase<TEntity> : IServiceBase<TEntity>
         where TEntity : class
     {
         protected UnitOfWork _unitOfWork;
         public ServiceBase(BankRegistryDbContext context)
         {
-            _unitOfWork = new UnitOfWork(context);
+            _unitOfWork = new UnitOfWork((BankRegistryDbContext)context);
         }
 
         public abstract void Remove(TEntity entity);
