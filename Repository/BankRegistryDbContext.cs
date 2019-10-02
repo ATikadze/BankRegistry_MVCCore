@@ -13,7 +13,7 @@ namespace Repository
     {
         public BankRegistryDbContext(DbContextOptions<BankRegistryDbContext> options) : base(options)
         {
-            Database.EnsureCreated();
+            Database.Migrate();
         }
 
         public DbSet<Bank> Banks { get; set; }
