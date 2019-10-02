@@ -14,7 +14,7 @@ namespace BankRegistry_MVCCore
 {
     using Microsoft.EntityFrameworkCore;
     using Repository;
-    using Domain;
+    using Domain.ServiceInterfaces;
     using Service;
     public class Startup
     {
@@ -39,11 +39,14 @@ namespace BankRegistry_MVCCore
 
             //Connecting to SQL
             string connectionString = @"Server=ALIKUNHUAWEI\SQLEXPRESS;Database=BankRegistry_Core;Trusted_Connection=True;";
-            services.AddDbContext<BankRegistryDbContext>(d => d.UseSqlServer(connectionString));
+            services.AddDbContext<BankRegistryDbContext>(d => d.UseSqlServer(connectionString), ServiceLifetime.Singleton, ServiceLifetime.Singleton);
+            /*By adding double Singleton, we make both DbContext class and DbContextOptions lifetime Singleton. They are Scoped by default, that's 
+            why I didn't get two DbContexts. (It was the same because of the same request)*/
 
-            services.AddTransient<Domain.ServiceInterfaces.IBankService, BankService>();
-            services.AddTransient<Domain.ServiceInterfaces.IContactPersonService, ContactPersonService>();
-            services.AddTransient<Domain.ServiceInterfaces.IPositionService, PositionService>();
+            services.AddTransient<IBankService, BankService>();
+            services.AddTransient<IContactPersonService, ContactPersonService>();
+            services.AddTransient<IPositionService, PositionService>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

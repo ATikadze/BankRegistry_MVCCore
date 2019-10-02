@@ -8,6 +8,7 @@ namespace Service
 {
     using Domain.ServiceInterfaces;
     using Domain;
+    using Domain.RepositoryInterfaces;
     using Repository;
     public class ContactPersonService : ServiceBase<ContactPerson>, IContactPersonService
     {

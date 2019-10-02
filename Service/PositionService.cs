@@ -8,6 +8,7 @@ namespace Service
 {
     using Domain.ServiceInterfaces;
     using Domain;
+    using Domain.RepositoryInterfaces;
     using Repository;
     public class PositionService : ServiceBase<Position>, IPositionService
     {
